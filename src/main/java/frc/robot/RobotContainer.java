@@ -57,10 +57,17 @@ public class RobotContainer {
    */
 
    private void configureButtonBindings() {
-    OneForBut.whileTrue(new RunCommand(()     -> m_FlexMotor.oneForward()));
-    TwoForBut.whileTrue(new RunCommand(()     -> m_FlexMotor.twoForward()));
-    OneBackBut.whileTrue(new RunCommand(()     -> m_FlexMotor.oneBack()));
-    TwoBackBut.whileTrue(new RunCommand(()     -> m_FlexMotor.twoBack()));
+    OneForBut.onTrue(new RunCommand(()   -> m_FlexMotor.oneForward()));
+    OneForBut.onFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));  // One motor shoot (upper one)
+
+    TwoForBut.onTrue(new RunCommand(()   -> m_FlexMotor.twoForward())); // Shoot
+    TwoForBut.onFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));
+
+    OneBackBut.onTrue(new RunCommand(()   -> m_FlexMotor.oneBack()));   // One motor intake (upper one)
+    OneBackBut.onFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));
+
+    TwoBackBut.onTrue(new RunCommand(()   -> m_FlexMotor.twoBack()));   // Intake 
+    TwoBackBut.onFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));
   
   /* Driver Buttons  and their actions*/}
   /**
