@@ -4,15 +4,21 @@
 
 package frc.robot;
 
+import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.FlexMotor;
+import edu.wpi.first.math.proto.Controller;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj.PS4Controller;
 
 
 /**
@@ -27,10 +33,10 @@ public class RobotContainer {
   private final FlexMotor m_FlexMotor = new FlexMotor();
   private final Joystick joy = new Joystick(0);
 
-  private final JoystickButton OneForBut = new JoystickButton(joy, 2);
-  private final JoystickButton TwoForBut = new JoystickButton(joy, 4);
-  private final JoystickButton OneBackBut = new JoystickButton(joy, 3);
-  private final JoystickButton TwoBackBut = new JoystickButton(joy, 5);
+  private final JoystickButton OneForBut = new JoystickButton(joy, PS4Controller.Button.kCircle.value);
+  private final JoystickButton TwoForBut = new JoystickButton(joy, PS4Controller.Button.kCross.value); // Button X to Shoot
+  private final JoystickButton OneBackBut = new JoystickButton(joy, PS4Controller.Button.kSquare.value);
+  private final JoystickButton TwoBackBut = new JoystickButton(joy, PS4Controller.Button.kTriangle.value);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
