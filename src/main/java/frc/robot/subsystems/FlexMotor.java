@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
     }
     
     public void oneForward(){flexMotor1.set(0.3);}
-    public void twoForward(){flexMotor1.set(-0.9); flexMotor2.set(0.9);}
+    public void twoForward(){flexMotor1.set(-0.55); flexMotor2.set(0.55);}
     public void oneBack(){flexMotor1.set(-0.3);}
     public void twoBack(){flexMotor1.set(-0.3); flexMotor2.set(0.3);}
     public void motorStop(){flexMotor1.set(0); flexMotor2.set(0);}

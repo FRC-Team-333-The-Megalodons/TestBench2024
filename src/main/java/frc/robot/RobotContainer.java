@@ -55,8 +55,8 @@ public class RobotContainer {
     OneForBut.onTrue(new RunCommand(()   -> m_FlexMotor.oneForward()));
     OneForBut.onFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));  // One motor shoot (upper one)
 
-    TwoForBut.onTrue(new RunCommand(()   -> m_FlexMotor.twoForward())); // Shoot
-    TwoForBut.onFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));
+    TwoForBut.whileTrue(new RunCommand(()   -> m_FlexMotor.twoForward())); // Shoot
+    TwoForBut.whileFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));
 
     OneBackBut.onTrue(new RunCommand(()   -> m_FlexMotor.oneBack()));   // One motor intake (upper one)
     OneBackBut.onFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));
