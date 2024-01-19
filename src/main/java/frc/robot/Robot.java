@@ -43,12 +43,12 @@ public class Robot extends TimedRobot {
               // Get the UsbCamera from CameraServer
               UsbCamera camera = CameraServer.startAutomaticCapture();
               // Set the resolution
-              camera.setResolution(1000, 800);
+              camera.setResolution(120, 120);
 
               // Get a CvSink. This will capture Mats from the camera
               CvSink cvSink = CameraServer.getVideo();
               // Setup a CvSource. This will send images back to the Dashboard
-              CvSource outputStream = CameraServer.putVideo("Rectangle", 1000, 800);
+              CvSource outputStream = CameraServer.putVideo("Rectangle", 120, 120);
 
               // Mats are very memory expensive. Lets reuse this Mat.
               Mat mat = new Mat();
@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
               while (!Thread.interrupted()) {
                 // Tell the CvSink to grab a frame from the camera and put it
                 // in the source mat.  If there is an error notify the output.
-                if (cvSink.grabFrame(mat) == 0) {
+                if (cvSink.grabFrame(mat) == 30) {
                   // Send the output the error.
                   outputStream.notifyError(cvSink.getError());
                   // skip the rest of the current iteration
@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
                 }
                 // Put a rectangle on the image
                 Imgproc.rectangle(
-                    mat, new Point(999, 780), new Point(700, 700), new Scalar(255, 255, 255), 80);
+                    mat, new Point(120, 120), new Point(120, 120), new Scalar(255, 255, 255), 30);
                 // Give the output stream a new image to display
                 outputStream.putFrame(mat);
               }
