@@ -27,6 +27,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final FlexMotor m_FlexMotor = new FlexMotor();
   private final Joystick joy = new Joystick(0);
+  private final LimeLight m_LimeLight = new LimeLight();
 
   private final JoystickButton OneForBut = new JoystickButton(joy, PS4Controller.Button.kCircle.value);
   private final JoystickButton TwoForBut = new JoystickButton(joy, PS4Controller.Button.kCross.value); // Button X to Shoot
