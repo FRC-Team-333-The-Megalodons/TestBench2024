@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -15,13 +16,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
     public class FlexMotor extends SubsystemBase{
     private CANSparkFlex flexMotor1;
     private CANSparkFlex flexMotor2;
-    private CANSparkFlex sensorMotor;
     private DigitalInput pe;
 
     public FlexMotor() {
-        flexMotor1 = new CANSparkFlex(4, MotorType.kBrushless);
+        flexMotor1 = new CANSparkFlex(5, MotorType.kBrushless);
+        flexMotor1.setIdleMode(IdleMode.kBrake);
         flexMotor2 = new CANSparkFlex(8, MotorType.kBrushless);
-        sensorMotor = new CANSparkFlex(5, MotorType.kBrushed);
         pe = new DigitalInput(3);
     }
     
@@ -34,13 +34,19 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
     public boolean detect() {
         if (pe.get()) {
-            motorStop();
-        } else { oneForward(); }
+            return true;
+        } else { return false;  }
     }
 
+    public void motorSpin() {
+       do { motorStop();
+        } while (detect());
+    }
     @Override
     public void periodic(){
-        SmartDashboard.putBoolean("NODE?", pe.get());
+        SmartDashboard.putBoolean("NODE?", detect());
+        motorSpin();
+    
     }
 }
  

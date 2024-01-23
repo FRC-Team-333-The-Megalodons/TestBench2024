@@ -53,8 +53,8 @@ public class RobotContainer {
    */
 
    private void configureButtonBindings() {
-    OneForBut.onTrue(new RunCommand(()   -> m_FlexMotor.oneForward()));
-    OneForBut.onFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));  // One motor shoot (upper one)
+    OneForBut.whileTrue(new RunCommand(()   -> m_FlexMotor.oneForward()));
+    OneForBut.whileFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));  // One motor shoot (upper one)
 
     TwoForBut.whileTrue(new RunCommand(()   -> m_FlexMotor.twoForward())); // Shoot
     TwoForBut.whileFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));
