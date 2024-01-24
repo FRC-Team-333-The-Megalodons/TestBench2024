@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.commands.Autos;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.FlexMotor;
+import frc.robot.subsystems.Leds;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -27,13 +28,14 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final FlexMotor m_FlexMotor = new FlexMotor();
   private final Joystick joy = new Joystick(0);
-  private final LimeLight m_LimeLight = new LimeLight();
+  private final Leds m_Leds = new Leds();
+
 
   private final JoystickButton OneForBut = new JoystickButton(joy, PS4Controller.Button.kCircle.value);
   private final JoystickButton TwoForBut = new JoystickButton(joy, PS4Controller.Button.kCross.value); // Button X to Shoot
   private final JoystickButton OneBackBut = new JoystickButton(joy, PS4Controller.Button.kSquare.value);
   private final JoystickButton TwoBackBut = new JoystickButton(joy, PS4Controller.Button.kTriangle.value);
-
+  private final JoystickButton LedBut = new JoystickButton(joy, PS4Controller.Button.kL1.value);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -64,6 +66,9 @@ public class RobotContainer {
 
     TwoBackBut.onTrue(new RunCommand(()   -> m_FlexMotor.twoBack()));   // Intake 
     TwoBackBut.onFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));
+
+    LedBut.whileTrue(new RunCommand(() -> m_Leds.royalBlueLED()));
+    LedBut.whileFalse(new RunCommand(() -> m_Leds.orangeLED()));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

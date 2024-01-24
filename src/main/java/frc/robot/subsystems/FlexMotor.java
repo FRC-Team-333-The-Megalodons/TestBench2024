@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
         pe = new DigitalInput(3);
     }
     
-    public void oneForward(){flexMotor1.set(0.3);}
+    public void oneForward(){flexMotor1.set(-0.25);}
     public void twoForward(){flexMotor1.set(-0.55); flexMotor2.set(0.55);}
     public void oneBack(){flexMotor1.set(-0.3);}
     public void twoBack(){flexMotor1.set(-0.3); flexMotor2.set(0.3);}
