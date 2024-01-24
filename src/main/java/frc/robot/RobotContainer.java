@@ -68,7 +68,7 @@ public class RobotContainer {
     TwoBackBut.onFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));
 
     LedBut.whileTrue(new RunCommand(() -> m_Leds.royalBlueLED()));
-    LedBut.whileFalse(new RunCommand(() -> m_Leds.orangeLED()));
+    LedBut.whileFalse(new RunCommand(() -> m_Leds.redLED()));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
