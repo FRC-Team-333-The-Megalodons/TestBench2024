@@ -9,7 +9,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.FlexMotor;
 import frc.robot.subsystems.Leds;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -31,11 +31,12 @@ public class RobotContainer {
   private final Leds m_Leds = new Leds();
 
 
-  private final JoystickButton OneForBut = new JoystickButton(joy, PS4Controller.Button.kCircle.value);
-  private final JoystickButton TwoForBut = new JoystickButton(joy, PS4Controller.Button.kCross.value); // Button X to Shoot
-  private final JoystickButton OneBackBut = new JoystickButton(joy, PS4Controller.Button.kSquare.value);
-  private final JoystickButton TwoBackBut = new JoystickButton(joy, PS4Controller.Button.kTriangle.value);
-  private final JoystickButton LedBut = new JoystickButton(joy, PS4Controller.Button.kL1.value);
+  private final JoystickButton OneForBut = new JoystickButton(joy, PS5Controller.Button.kCircle.value);
+  private final JoystickButton TwoForBut = new JoystickButton(joy, PS5Controller.Button.kCross.value); // Button X to Shoot
+  private final JoystickButton OneBackBut = new JoystickButton(joy, PS5Controller.Button.kSquare.value);
+  private final JoystickButton TwoBackBut = new JoystickButton(joy, PS5Controller.Button.kTriangle.value);
+  private final JoystickButton LedBut = new JoystickButton(joy, PS5Controller.Button.kL1.value);
+  //private final JoystickButton IntakeBut = new JoystickButton(joy, PS4Controller.Button.kR2.value);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -61,14 +62,17 @@ public class RobotContainer {
     TwoForBut.whileTrue(new RunCommand(()   -> m_FlexMotor.twoForward())); // Shoot
     TwoForBut.whileFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));
 
-    OneBackBut.onTrue(new RunCommand(()   -> m_FlexMotor.oneBack()));   // One motor intake (upper one)
-    OneBackBut.onFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));
+    OneBackBut.whileTrue(new RunCommand(()   -> m_FlexMotor.oneBack()));   // One motor intake (upper one)
+    OneBackBut.whileFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));
 
-    TwoBackBut.onTrue(new RunCommand(()   -> m_FlexMotor.twoBack()));   // Intake 
-    TwoBackBut.onFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));
+    TwoBackBut.whileTrue(new RunCommand(()   -> m_FlexMotor.twoBack()));   // Intake 
+    TwoBackBut.whileFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));
 
     LedBut.whileTrue(new RunCommand(() -> m_Leds.royalBlueLED()));
-    LedBut.whileFalse(new RunCommand(() -> m_Leds.redLED()));
+    LedBut.whileFalse(new RunCommand(() -> m_Leds.orangeLED()));
+
+    //IntakeBut.whileTrue(new RunCommand(() -> m_FlexMotor.intakeMotorIN()));
+    //IntakeBut.whileFalse(new RunCommand(() -> m_FlexMotor.motorStop()));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
