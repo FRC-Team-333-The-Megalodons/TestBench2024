@@ -19,8 +19,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
     private CANSparkFlex flexMotor1;
     private CANSparkFlex flexMotor2;
     private CANSparkFlex flexMotor3;
-    DutyCycleEncoder encoder;
-    PIDController pidThing = new PIDController(1.1, 0, 0);
+    private DutyCycleEncoder encoder;
+    private PIDController pidThing = new PIDController(0.3, 0, 0);
 
     private DigitalInput pe;
 

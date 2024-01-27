@@ -36,6 +36,7 @@ public class RobotContainer {
   private final JoystickButton OneBackBut = new JoystickButton(joy, PS5Controller.Button.kSquare.value);
   private final JoystickButton TwoBackBut = new JoystickButton(joy, PS5Controller.Button.kTriangle.value);
   private final JoystickButton LedBut = new JoystickButton(joy, PS5Controller.Button.kL1.value);
+  private final JoystickButton PIDButton = new JoystickButton(joy, PS5Controller.Button.kR2.value);
   //private final JoystickButton IntakeBut = new JoystickButton(joy, PS4Controller.Button.kR2.value);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -70,6 +71,9 @@ public class RobotContainer {
 
     LedBut.whileTrue(new RunCommand(() -> m_Leds.royalBlueLED()));
     LedBut.whileFalse(new RunCommand(() -> m_Leds.orangeLED()));
+
+    PIDButton.whileTrue(new RunCommand(() -> m_FlexMotor.toSetPoint()));
+    PIDButton.whileFalse(new RunCommand(() -> m_FlexMotor.setToZero()));
 
     //IntakeBut.whileTrue(new RunCommand(() -> m_FlexMotor.intakeMotorIN()));
     //IntakeBut.whileFalse(new RunCommand(() -> m_FlexMotor.motorStop()));
