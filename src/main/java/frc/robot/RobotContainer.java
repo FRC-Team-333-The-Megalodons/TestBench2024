@@ -31,18 +31,18 @@ public class RobotContainer {
   private final Leds m_Leds = new Leds();
 
 
-  private final JoystickButton OneForBut = new JoystickButton(joy, PS5Controller.Button.kCircle.value);
-  private final JoystickButton TwoForBut = new JoystickButton(joy, PS5Controller.Button.kCross.value); // Button X to Shoot
-  private final JoystickButton OneBackBut = new JoystickButton(joy, PS5Controller.Button.kSquare.value);
-  private final JoystickButton TwoBackBut = new JoystickButton(joy, PS5Controller.Button.kTriangle.value);
-  private final JoystickButton LedBut = new JoystickButton(joy, PS5Controller.Button.kL1.value);
-  private final JoystickButton PIDButton = new JoystickButton(joy, PS5Controller.Button.kR2.value);
-  //private final JoystickButton IntakeBut = new JoystickButton(joy, PS4Controller.Button.kR2.value);
+  private final JoystickButton intakeBut = new JoystickButton(joy, PS5Controller.Button.kR1.value);
+  private final JoystickButton outakeBut  = new JoystickButton(joy, PS5Controller.Button.kL1.value); 
+  private final JoystickButton shooFastBut = new JoystickButton(joy, PS5Controller.Button.kR2.value);
+  private final JoystickButton shootSlowBut = new JoystickButton(joy, PS5Controller.Button.kL2.value);
+  private final JoystickButton LedBut = new JoystickButton(joy, PS5Controller.Button.kTouchpad.value);
+  private final JoystickButton PIDButtonOne = new JoystickButton(joy, PS5Controller.Button.kCircle.value);
+  private final JoystickButton PIDButtonZero = new JoystickButton(joy, PS5Controller.Button.kCross.value);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     
-    m_FlexMotor.setDefaultCommand(new RunCommand(() -> m_FlexMotor.motorStop(), m_FlexMotor));
+    m_FlexMotor.setDefaultCommand(new RunCommand(() -> m_FlexMotor.everythingStop(), m_FlexMotor));
     configureButtonBindings();
   }
 
@@ -57,26 +57,23 @@ public class RobotContainer {
    */
 
    private void configureButtonBindings() {
-    OneForBut.whileTrue(new RunCommand(()   -> m_FlexMotor.oneForward()));
-    OneForBut.whileFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));  // One motor shoot (upper one)
+    intakeBut.whileTrue(new RunCommand(()   -> m_FlexMotor.intake()));
+    intakeBut.whileFalse(new RunCommand(()  -> m_FlexMotor.intakeStop()));  // One motor shoot (upper one)
 
-    TwoForBut.whileTrue(new RunCommand(()   -> m_FlexMotor.twoForward())); // Shoot
-    TwoForBut.whileFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));
+    outakeBut.whileTrue(new RunCommand(()   -> m_FlexMotor.outake())); // Shoot
+    outakeBut.whileFalse(new RunCommand(()  -> m_FlexMotor.intakeStop()));
 
-    OneBackBut.whileTrue(new RunCommand(()   -> m_FlexMotor.oneBack()));   // One motor intake (upper one)
-    OneBackBut.whileFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));
+    shooFastBut.whileTrue(new RunCommand(()   -> m_FlexMotor.shootFast()));   // One motor intake (upper one)
+    shooFastBut.whileFalse(new RunCommand(()  -> m_FlexMotor.shootStop()));
 
-    TwoBackBut.whileTrue(new RunCommand(()   -> m_FlexMotor.twoBack()));   // Intake 
-    TwoBackBut.whileFalse(new RunCommand(()  -> m_FlexMotor.motorStop()));
+    shootSlowBut.whileTrue(new RunCommand(()   -> m_FlexMotor.shootSlow()));   // Intake 
+    shootSlowBut.whileFalse(new RunCommand(()  -> m_FlexMotor.shootStop()));
 
     LedBut.whileTrue(new RunCommand(() -> m_Leds.royalBlueLED()));
     LedBut.whileFalse(new RunCommand(() -> m_Leds.orangeLED()));
 
-    PIDButton.whileTrue(new RunCommand(() -> m_FlexMotor.toSetPoint()));
-    PIDButton.whileFalse(new RunCommand(() -> m_FlexMotor.setToZero()));
-
-    //IntakeBut.whileTrue(new RunCommand(() -> m_FlexMotor.intakeMotorIN()));
-    //IntakeBut.whileFalse(new RunCommand(() -> m_FlexMotor.motorStop()));
+    PIDButtonOne.whileTrue(new RunCommand(() -> m_FlexMotor.toSetPoint()));
+    PIDButtonZero.whileTrue(new RunCommand(() -> m_FlexMotor.setToZero()));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

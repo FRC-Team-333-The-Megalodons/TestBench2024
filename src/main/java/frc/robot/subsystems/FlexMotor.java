@@ -16,50 +16,51 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /** Add your docs here. */
     public class FlexMotor extends SubsystemBase{
-    private CANSparkFlex flexMotor1;
-    private CANSparkFlex flexMotor2;
-    private CANSparkFlex flexMotor3;
-    private DutyCycleEncoder encoder;
-    private PIDController pidThing = new PIDController(0.3, 0, 0);
+    private CANSparkFlex intakeMotor;
+    private CANSparkFlex shooterMotor1;
+    private CANSparkFlex shooterMotor2;
+
+    private CANSparkFlex testPIDMotor;
+    private DutyCycleEncoder testEncoder;
+    private PIDController pidController = new PIDController(0.09, 0, 0);
 
     private DigitalInput pe;
 
     public FlexMotor() {
-        flexMotor1 = new CANSparkFlex(5, MotorType.kBrushless);
-        flexMotor1.setIdleMode(IdleMode.kCoast);
+        intakeMotor = new CANSparkFlex(6, MotorType.kBrushless);
+        intakeMotor.setIdleMode(IdleMode.kCoast);
 
-        flexMotor2 = new CANSparkFlex(8, MotorType.kBrushless);
-        flexMotor2.setIdleMode(IdleMode.kCoast);
+        shooterMotor1 = new CANSparkFlex(7, MotorType.kBrushless);
+        shooterMotor1.setIdleMode(IdleMode.kCoast);
+        shooterMotor2 = new CANSparkFlex(8, MotorType.kBrushless);
+        shooterMotor2.setIdleMode(IdleMode.kCoast);
 
-        flexMotor3 = new CANSparkFlex(7, MotorType.kBrushless);
-        flexMotor3.setIdleMode(IdleMode.kCoast);
-        encoder = new DutyCycleEncoder(0);
-        encoder.setConnectedFrequencyThreshold(900);
-        encoder.reset();
+        testPIDMotor = new CANSparkFlex(2, MotorType.kBrushless);
+        testPIDMotor.setIdleMode(IdleMode.kBrake);
 
+        testEncoder = new DutyCycleEncoder(0);
+        testEncoder.setConnectedFrequencyThreshold(900);
+        testEncoder.reset();
         pe = new DigitalInput(3);
-        pidThing.enableContinuousInput(0, 1);
+        // pidController.enableContinuousInput(0, 1);
     }
     
-    public void oneForward(){flexMotor1.set(0.3);}
-    public void twoForward(){flexMotor1.set(1); flexMotor2.set(1);}
+    public void intake(){intakeMotor.set(0.3);}
+    public void outake(){intakeMotor.set(-0.3);}
+    public void intakeStop(){intakeMotor.set(0);}
 
-    public void oneBack(){flexMotor1.set(-0.3);}
-    public void twoBack(){flexMotor1.set(-0.3); flexMotor2.set(-0.3);}
+    public void shootSlow(){shooterMotor1.set(-0.4); shooterMotor2.set(0.4);}
+    public void shootFast(){shooterMotor1.set(-1); shooterMotor2.set(1);}
+    public void shootStop(){shooterMotor1.set(0);shooterMotor2.set(0);}
 
-    //public void intakeMotorIN(){flexMotor3.set(-0.3);}
-    //public void intakeMotorStop(){flexMotor3.set(0);}
-
-    public void motorStop(){flexMotor1.set(0); flexMotor2.set(0);}
-
+    public void everythingStop(){shooterMotor1.set(0);shooterMotor2.set(0);intakeMotor.set(0);}
     public void toSetPoint(){
-        flexMotor3.set(pidThing.calculate(encoder.getAbsolutePosition(), 0.5)); 
+        shooterMotor2.set(pidController.calculate(testEncoder.getAbsolutePosition(), 1)); 
     }
 
     public void setToZero(){
-        flexMotor3.set(pidThing.calculate(encoder.getAbsolutePosition(), 0));
+        shooterMotor2.set(pidController.calculate(testEncoder.getAbsolutePosition(), 0));
     }
-
 
     public boolean detect() {
         if (pe.get()) {
@@ -67,23 +68,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
         } else { return false;  }
     }
 
-    public boolean atSetPoint() {
-        if (encoder.getAbsolutePosition() == 0){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /*public void intakeIn() {
-       do { intakeMotorStop();
+    public void intakeIn() {
+       do { intakeStop();
         } while (detect());
-    }*/
+    }
     @Override
     public void periodic(){
         SmartDashboard.putBoolean("NODE?", detect());
         //intakeIn();
-        SmartDashboard.putNumber("encoder", encoder.get());
-        SmartDashboard.getBoolean("Encoder at positoin?", atSetPoint());
+        SmartDashboard.putNumber("encoder", testEncoder.get());
+        SmartDashboard.putBoolean("Encoder at positoin?", pidController.atSetpoint());
 }
     }
