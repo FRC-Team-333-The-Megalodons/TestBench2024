@@ -24,24 +24,26 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
     private DutyCycleEncoder testEncoder;
     private PIDController pidController = new PIDController(0.09, 0, 0);
 
-    private DigitalInput pe;
+    private DigitalInput peRight;
+    private DigitalInput peLeft;
 
     public FlexMotor() {
         intakeMotor = new CANSparkFlex(6, MotorType.kBrushless);
         intakeMotor.setIdleMode(IdleMode.kCoast);
 
-        shooterMotor1 = new CANSparkFlex(7, MotorType.kBrushless);
-        shooterMotor1.setIdleMode(IdleMode.kCoast);
-        shooterMotor2 = new CANSparkFlex(8, MotorType.kBrushless);
-        shooterMotor2.setIdleMode(IdleMode.kCoast);
+        // shooterMotor1 = new CANSparkFlex(7, MotorType.kBrushless);
+        // shooterMotor1.setIdleMode(IdleMode.kCoast);
+        // shooterMotor2 = new CANSparkFlex(8, MotorType.kBrushless);
+        // shooterMotor2.setIdleMode(IdleMode.kCoast);
 
-        testPIDMotor = new CANSparkFlex(2, MotorType.kBrushless);
-        testPIDMotor.setIdleMode(IdleMode.kBrake);
+        // testPIDMotor = new CANSparkFlex(2, MotorType.kBrushless);
+        // testPIDMotor.setIdleMode(IdleMode.kBrake);
 
         testEncoder = new DutyCycleEncoder(0);
         testEncoder.setConnectedFrequencyThreshold(900);
         testEncoder.reset();
-        pe = new DigitalInput(3);
+        peLeft = new DigitalInput(3);
+        peRight = new DigitalInput(2);
         // pidController.enableContinuousInput(0, 1);
     }
     
@@ -62,21 +64,34 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
         shooterMotor2.set(pidController.calculate(testEncoder.getAbsolutePosition(), 0));
     }
 
-    public boolean detect() {
-        if (pe.get()) {
+    public boolean detectRight() {
+        if (peRight.get()) {
             return true;
         } else { return false;  }
     }
-
-    public void intakeIn() {
-       do { intakeStop();
-        } while (detect());
+    public boolean detectLeft() {
+        if (peLeft.get()) {
+            return true;
+        } else { return false; }
     }
+
+    public void intakeInRight() {
+       do { intakeStop();
+        } while (detectRight());
+    }
+
+    public void intakeInLeft() {
+        do {intakeStop(); 
+        } while (detectLeft());
+    }
+
     @Override
     public void periodic(){
-        SmartDashboard.putBoolean("NODE?", detect());
+        SmartDashboard.putBoolean("NODERight?", detectRight());
+        SmartDashboard.putBoolean("NODELeft?", detectLeft());
         //intakeIn();
         SmartDashboard.putNumber("encoder", testEncoder.get());
         SmartDashboard.putBoolean("Encoder at positoin?", pidController.atSetpoint());
+        
 }
     }
