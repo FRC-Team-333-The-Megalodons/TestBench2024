@@ -31,20 +31,20 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
         intakeMotor = new CANSparkFlex(6, MotorType.kBrushless);
         intakeMotor.setIdleMode(IdleMode.kCoast);
 
-        // shooterMotor1 = new CANSparkFlex(7, MotorType.kBrushless);
-        // shooterMotor1.setIdleMode(IdleMode.kCoast);
-        // shooterMotor2 = new CANSparkFlex(8, MotorType.kBrushless);
-        // shooterMotor2.setIdleMode(IdleMode.kCoast);
+         shooterMotor1 = new CANSparkFlex(7, MotorType.kBrushless);
+         shooterMotor1.setIdleMode(IdleMode.kCoast);
+         shooterMotor2 = new CANSparkFlex(8, MotorType.kBrushless);
+         shooterMotor2.setIdleMode(IdleMode.kCoast);
 
-        // testPIDMotor = new CANSparkFlex(2, MotorType.kBrushless);
-        // testPIDMotor.setIdleMode(IdleMode.kBrake);
+         testPIDMotor = new CANSparkFlex(2, MotorType.kBrushless);
+         testPIDMotor.setIdleMode(IdleMode.kBrake);
 
         testEncoder = new DutyCycleEncoder(0);
         testEncoder.setConnectedFrequencyThreshold(900);
         testEncoder.reset();
         peLeft = new DigitalInput(3);
         peRight = new DigitalInput(2);
-        // pidController.enableContinuousInput(0, 1);
+         pidController.enableContinuousInput(0, 1);
     }
     
     public void intake(){intakeMotor.set(0.3);}
@@ -87,9 +87,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
     @Override
     public void periodic(){
+        intakeInLeft();
+        intakeInRight();
+
         SmartDashboard.putBoolean("NODERight?", detectRight());
-        SmartDashboard.putBoolean("NODELeft?", detectLeft());
-        //intakeIn();
+        SmartDashboard.putBoolean("NODELeft", detectLeft());
+        
         SmartDashboard.putNumber("encoder", testEncoder.get());
         SmartDashboard.putBoolean("Encoder at positoin?", pidController.atSetpoint());
         
