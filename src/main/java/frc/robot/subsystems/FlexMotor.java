@@ -64,37 +64,19 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
         shooterMotor2.set(pidController.calculate(testEncoder.getAbsolutePosition(), 0));
     }
 
-    public boolean detectRight() {
-        if (peRight.get()) {
+    public boolean detectNote(){
+        if (peLeft.get() || peRight.get()){
             return true;
-        } else { return false;  }
-    }
-    public boolean detectLeft() {
-        if (peLeft.get()) {
-            return true;
-        } else { return false; }
-    }
-
-    public void intakeInRight() {
-       do { intakeStop();
-        } while (detectRight());
-    }
-
-    public void intakeInLeft() {
-        do {intakeStop(); 
-        } while (detectLeft());
+        } else {return false; }
     }
 
     @Override
     public void periodic(){
-        intakeInLeft();
-        intakeInRight();
+        SmartDashboard.putBoolean("Left", peLeft.get());
+        SmartDashboard.putBoolean("Right", peRight.get());
+        SmartDashboard.putBoolean("GetNote", detectNote());
 
-        SmartDashboard.putBoolean("NODERight?", detectRight());
-        SmartDashboard.putBoolean("NODELeft", detectLeft());
-        
         SmartDashboard.putNumber("encoder", testEncoder.get());
         SmartDashboard.putBoolean("Encoder at positoin?", pidController.atSetpoint());
-        
-}
     }
+}
