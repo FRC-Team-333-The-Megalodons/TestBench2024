@@ -8,11 +8,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.FlexMotor;
 
 public class IntakeIn extends Command {
-  /** Creates a new IntakeIn. */
-  private final FlexMotor int
+  private final FlexMotor m_Intake;
+
+  public IntakeIn(FlexMotor intake) {
     // Use addRequirements() here to declare subsystem dependencies.
-    FlexMotor m_Intake;
-    addRequirements(FlexMotor);
+    this.m_Intake = intake;
+    addRequirements(m_Intake);
   }
 
   // Called when the command is initially scheduled.
@@ -21,15 +22,19 @@ public class IntakeIn extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_Intake.intake();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_Intake.intakeStop();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_Intake.detectNote();
   }
 }

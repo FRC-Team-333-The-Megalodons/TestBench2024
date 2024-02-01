@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.commands.Autos;
+import frc.robot.commands.IntakeIn;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.FlexMotor;
 import frc.robot.subsystems.Leds;
@@ -57,8 +58,7 @@ public class RobotContainer {
    */
 
    private void configureButtonBindings() {
-    intakeBut.whileTrue(new RunCommand(()   -> m_FlexMotor.intake()));
-    intakeBut.whileFalse(new RunCommand(()  -> m_FlexMotor.intakeStop()));  // One motor shoot (upper one)
+    intakeBut.whileTrue(new IntakeIn(m_FlexMotor));  //intake
 
     outakeBut.whileTrue(new RunCommand(()   -> m_FlexMotor.outake())); // Shoot
     outakeBut.whileFalse(new RunCommand(()  -> m_FlexMotor.intakeStop()));
@@ -66,7 +66,7 @@ public class RobotContainer {
     shooFastBut.whileTrue(new RunCommand(()   -> m_FlexMotor.shootFast()));   // One motor intake (upper one)
     shooFastBut.whileFalse(new RunCommand(()  -> m_FlexMotor.shootStop()));
 
-    shootSlowBut.whileTrue(new RunCommand(()   -> m_FlexMotor.shootSlow()));   // Intake 
+    shootSlowBut.whileTrue(new RunCommand(()   -> m_FlexMotor.shootSlow()));  
     shootSlowBut.whileFalse(new RunCommand(()  -> m_FlexMotor.shootStop()));
 
     LedBut.whileTrue(new RunCommand(() -> m_Leds.royalBlueLED()));
