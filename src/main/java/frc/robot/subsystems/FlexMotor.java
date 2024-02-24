@@ -42,6 +42,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
         testEncoder = new DutyCycleEncoder(0);
         testEncoder.setConnectedFrequencyThreshold(900);
         testEncoder.reset();
+
+
         peLeft = new DigitalInput(3);
         peRight = new DigitalInput(2);
          pidController.enableContinuousInput(0, 1);
@@ -56,6 +58,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
     public void shootStop(){shooterMotor1.set(0);shooterMotor2.set(0);}
 
     public void everythingStop(){shooterMotor1.set(0);shooterMotor2.set(0);intakeMotor.set(0);}
+
     public void toSetPoint(){
         shooterMotor2.set(pidController.calculate(testEncoder.getAbsolutePosition(), 1)); 
     }
@@ -76,7 +79,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
         SmartDashboard.putBoolean("Right", peRight.get());
         SmartDashboard.putBoolean("GetNote", detectNote());
 
-        SmartDashboard.putNumber("encoder", testEncoder.get());
+        SmartDashboard.putNumber("encoder", testEncoder.getAbsolutePosition());
         SmartDashboard.putBoolean("Encoder at positoin?", pidController.atSetpoint());
     }
 }
