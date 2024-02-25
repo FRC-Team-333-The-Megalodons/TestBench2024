@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
@@ -77,11 +76,5 @@ public class Leds extends SubsystemBase {
             e.printStackTrace();
         }
       }
-  } 
-  
-  public static void givenInputAsString_whenStringToBoolean_thenValidBooleanConversion() {
-      assertEquals(Boolean.TRUE, Boolean.valueOf("TRUE"));
-      assertEquals(Boolean.FALSE, Boolean.valueOf("false"));
-      assertEquals(Boolean.TRUE, Boolean.parseBoolean("True"));
   }
-}`
+}

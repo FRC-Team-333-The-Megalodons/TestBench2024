@@ -39,7 +39,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
          testPIDMotor = new CANSparkFlex(2, MotorType.kBrushless);
          testPIDMotor.setIdleMode(IdleMode.kBrake);
 
-        testEncoder = new DutyCycleEncoder(0);
+        testEncoder = new DutyCycleEncoder(9);
         testEncoder.setConnectedFrequencyThreshold(900);
         testEncoder.reset();
 
