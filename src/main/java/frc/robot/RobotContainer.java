@@ -4,17 +4,12 @@
 
 package frc.robot;
 
-import frc.robot.commands.Autos;
-import frc.robot.commands.IntakeIn;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.FlexMotor;
 import frc.robot.subsystems.Leds;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 
@@ -26,24 +21,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final FlexMotor m_FlexMotor = new FlexMotor();
-  private final Joystick joy = new Joystick(0);
-  private final Leds m_Leds = new Leds();
-
-
-  private final JoystickButton intakeBut = new JoystickButton(joy, PS5Controller.Button.kR1.value);
-  private final JoystickButton outakeBut  = new JoystickButton(joy, PS5Controller.Button.kL1.value); 
-  private final JoystickButton shooFastBut = new JoystickButton(joy, PS5Controller.Button.kR2.value);
-  private final JoystickButton shootSlowBut = new JoystickButton(joy, PS5Controller.Button.kL2.value);
-  private final JoystickButton LedBut = new JoystickButton(joy, PS5Controller.Button.kTouchpad.value);
-  private final JoystickButton PIDButtonOne = new JoystickButton(joy, PS5Controller.Button.kCircle.value);
-  private final JoystickButton PIDButtonZero = new JoystickButton(joy, PS5Controller.Button.kCross.value);
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+ private final FlexMotor m_FlexMotor = new FlexMotor();
+ private final CommandPS5Controller joy = new CommandPS5Controller(0);
+  // private final Leds m_Leds = new Leds();
+  
   public RobotContainer() {
     // Configure the trigger bindings
-    
-    m_FlexMotor.setDefaultCommand(new RunCommand(() -> m_FlexMotor.everythingStop(), m_FlexMotor));
     configureButtonBindings();
   }
 
@@ -58,22 +42,12 @@ public class RobotContainer {
    */
 
    private void configureButtonBindings() {
-    intakeBut.whileTrue(new IntakeIn(m_FlexMotor));  //intake
 
-    outakeBut.whileTrue(new RunCommand(()   -> m_FlexMotor.outake())); // Shoot
-    outakeBut.whileFalse(new RunCommand(()  -> m_FlexMotor.intakeStop()));
+    // joy.triangle().whileFalse((new RunCommand(() -> m_Leds.noLED(), m_Leds)));
+    // joy.triangle().whileTrue((new RunCommand(() -> m_Leds.blinkingColor(0, 0, 250), m_Leds))); //BLUE
 
-    shooFastBut.whileTrue(new RunCommand(()   -> m_FlexMotor.shootFast()));   // One motor intake (upper one)
-    shooFastBut.whileFalse(new RunCommand(()  -> m_FlexMotor.shootStop()));
-
-    shootSlowBut.whileTrue(new RunCommand(()   -> m_FlexMotor.shootSlow()));  
-    shootSlowBut.whileFalse(new RunCommand(()  -> m_FlexMotor.shootStop()));
-
-    LedBut.whileTrue(new RunCommand(() -> m_Leds.royalBlueLED()));
-    LedBut.whileFalse(new RunCommand(() -> m_Leds.orangeLED()));
-
-    PIDButtonOne.whileTrue(new RunCommand(() -> m_FlexMotor.toSetPoint()));
-    PIDButtonZero.whileTrue(new RunCommand(() -> m_FlexMotor.setToZero()));
+     joy.L1().whileFalse((new RunCommand(() -> m_FlexMotor.stop(), m_FlexMotor)));
+     joy.L1().whileTrue((new RunCommand(() -> m_FlexMotor.toSetPOint(), m_FlexMotor))); 
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -81,6 +55,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return null;
   }
 }
