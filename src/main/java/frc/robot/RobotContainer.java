@@ -42,12 +42,8 @@ public class RobotContainer {
    */
 
    private void configureButtonBindings() {
-
-    // joy.triangle().whileFalse((new RunCommand(() -> m_Leds.noLED(), m_Leds)));
-    // joy.triangle().whileTrue((new RunCommand(() -> m_Leds.blinkingColor(0, 0, 250), m_Leds))); //BLUE
-
-     joy.L1().whileFalse((new RunCommand(() -> m_FlexMotor.stop(), m_FlexMotor)));
-     joy.L1().whileTrue((new RunCommand(() -> m_FlexMotor.toSetPOint(), m_FlexMotor))); 
+    joy.L1().whileTrue(new RunCommand(()->m_FlexMotor.spin(), m_FlexMotor));
+    joy.L1().whileFalse(new RunCommand(()->m_FlexMotor.stop(), m_FlexMotor));   
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
